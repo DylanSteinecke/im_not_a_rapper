@@ -6,13 +6,18 @@ set +e +u +o pipefail
 # https://biobank.ndph.ox.ac.uk/ukb/label.cgi?id=100319 
 UKB_BGEN_DIR="/mnt/project/Bulk/Imputation/UKB imputation from genotype"
 for CHR in {1..22}; do
-       plink2 --bgen "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3" ref-first \
+       plink2 --bgen "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3.bgen" ref-first \
+              --sample "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3.sample" \
               --make-bed \
               --extract ~/sibreg/sibreg_project/processed/snp_list_of_snps_with_ldscores.snplist \
               --keep ~/sibreg/sibreg_project/processed/two_eur_sibs_per_fam_sibs_except_five_bad_chr_person_list.txt \
               --threads 15 \
-              --out ~/eur_sibs_snps_with_ldscores_orig_imputed_chr${CHR}
+              --out ~/eur_sibs_snps_with_ldscores_orig_imputed_chr${CHR} \
+	      --memory 50000
+
+       dx  upload ~/eur_sibs_snps_with_ldscores_orig_imputed_chr${CHR}*
 done
+exit
 
 # RAP to extract most EUR siblings from WGS, convert to bfiles
 UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants, PLINK format [500k release]"
