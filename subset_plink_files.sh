@@ -5,15 +5,15 @@ set +e +u +o pipefail
 # "The alleles in the imputation are aligned with REF/ALT, first_allele is the ref allele on the fwd strand."
 # https://biobank.ndph.ox.ac.uk/ukb/label.cgi?id=100319 
 UKB_BGEN_DIR="/mnt/project/Bulk/Imputation/UKB imputation from genotype"
-for CHR in {1..22}; do
+for CHR in {5..20}; do
        plink2 --bgen "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3.bgen" ref-first \
               --sample "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3.sample" \
               --make-bed \
               --extract ~/sibreg/sibreg_project/processed/snp_list_of_snps_with_ldscores.snplist \
               --keep ~/sibreg/sibreg_project/processed/two_eur_sibs_per_fam_sibs_except_five_bad_chr_person_list.txt \
-              --threads 15 \
+              --threads 40 \
               --out ~/eur_sibs_snps_with_ldscores_orig_imputed_chr${CHR} \
-	      --memory 50000
+	      --memory 140000
 
        dx  upload ~/eur_sibs_snps_with_ldscores_orig_imputed_chr${CHR}*
 done
