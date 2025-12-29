@@ -49,7 +49,9 @@ Create ssh keys on the RAP.
 Save them to some folder. 
 
 #### Copy the keys 
-```cat my_folder/my_ssh_keys.sh```
+```
+cat my_folder/my_ssh_keys.sh
+```
 
 Go to your GitHub profile online and then paste the ssh keys
 
@@ -345,8 +347,11 @@ main() {
 
 main
 ```
+
 #### Save the file
-```dx upload my_startup_file.sh```
+```
+dx upload my_startup_file.sh
+```
 
 Now that all of this has been set up, you won’t need to do that again! Instead, you will just do this every time to get all the GitHub files and packages you need, downloading and then running the startup file:
 ```
