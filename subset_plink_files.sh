@@ -28,5 +28,19 @@ for CHR in {1..22}; do
               --keep ~/sibreg/sibreg_project/processed/two_eur_sibs_per_fam_sibs_except_five_bad_chr_person_list.txt \
               --threads 15 \
               --no-pheno \
+			  --memory 60000 \ 
               --out ~/eur_sibs_snps_with_ldscores_wgs_chr${CHR}
+done
+
+
+
+# RAP to extract most EUR siblings from WGS, convert to bfiles
+UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants, PLINK format [500k release]"
+for CHR in {1..22}; do
+       plink2 --pfile "${UKB_PFILE_DIR}/ukb24308_c${CHR}_b0_v1" \
+              --keep ~/sibreg/sibreg_project/processed/two_eur_sibs_per_fam_sibs_except_five_bad_chr_person_list.txt \
+              --threads 15 \
+              --no-pheno \
+			  --memory 60000 \ 
+              --out ~/eur_sibs_snps_wgs_chr${CHR}
 done
