@@ -1,5 +1,5 @@
 # im_not_a_rapper
-Personal helper code for working with the UK Biobank RAP
+Personal helper code for working with the UK Biobank RAP. This might save you a TON of time for setting up your project environment, reducing the fixed costs associated with working on the UK Biobank RAP. 
 
 # First Time Setup on the RAP
 ## Launching an Instance in a Project
