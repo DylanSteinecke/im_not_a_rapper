@@ -65,37 +65,37 @@ dx upload my_folder/my_ssh_keys.sh –path /ssh_keys/
 This is set up for two repositories. You can add or remove the number of repositories based on how many repositories you define and call. The highlighted areas are the variables you would need to change (e.g., your GitHub repository names) and code you may want to modify (e.g., if you want to add another repository).
 
 #### Edit the code below. Then, create a file and paste this code into it. 
-Edit the bold lines to ensure your variable names match with your repo and file paths.
+Edit the lines with "# ***" comments to ensure your variable names match with your repo and file paths.
 ```
 #!/usr/bin/env bash
 set +e +u +o pipefail
 
 # SSH key variables
 HOME_SSH="$HOME/.ssh"       # Where you will download the ssh keys to (ephemeral storage)
-**DX_KEY_DIR="/ssh_keys/"     # Folder where you will "dx upload" and "dx download" ssh keys to 
-**
+DX_KEY_DIR="/ssh_keys/"   # Folder where you will "dx upload" and "dx download" ssh keys to # *** 
+
 # GitHub repo names
-**MY_FIRST_REPO_SSH="${MY_FIRST_REPO_SSH:-git@github.com:MyUserName/my_repo.git}"  # 1st repo 
-****MY_SECOND_REPO_SSH="${MY_SECOND_REPO_SSH:-git@github.com:MyUserName/my_other_repo.git}" # 2nd
-**
+MY_FIRST_REPO_SSH="${MY_FIRST_REPO_SSH:-git@github.com:MyUserName/my_repo.git}"           # 1st repo 
+MY_SECOND_REPO_SSH="${MY_SECOND_REPO_SSH:-git@github.com:MyUserName/my_other_repo.git}" # 2nd repo  # *** 
+
 # GitHub branch names you are working on (currently assumes each repo has the same branch name)
 **BRANCH="${BRANCH:-my_branch_name}" # Branch of the repos you want to be on    
 **
 # Local locations to download/clone the GitHub repositories to
-**LOCAL_MY_FIRST_REPO="$HOME/my_repo"               # Local copy of the first repo
-****LOCAL_MY_SECOND_REPO="$HOME/sibreg/my_other_repo" # Local copy of the other repo
-**
+LOCAL_MY_FIRST_REPO="$HOME/my_repo"               # Local copy of the first repo
+LOCAL_MY_SECOND_REPO="$HOME/sibreg/my_other_repo" # Local copy of the other repo  # *** 
+
 # Your GitHub user name and email
-**GITHUB_USERNAME="MyUserName"
-****GITHUB_EMAIL="my.email@email.com"
-**
+GITHUB_USERNAME="MyUserName"              # *** 
+GITHUB_EMAIL="my.email@email.com"     # *** 
+
 # Conda environment variables
-**ENV_NAME="my_env_name"  # Name of your conda environment. See the {my_env_name}.tar.gz name
-**ENV_TARBALL_FILE="${ENV_NAME}.tar.gz"
-**ENV_TARBALL_PATH="/mnt/project/conda_envs/${ENV_TARBALL_FILE}" # Compressed conda env location
-****LOCAL_ENV_PATH="$HOME/conda_envs/${ENV_NAME}" # Save the conda env here
-****ENV_YAML_PATH="${LOCAL_MY_FIRST_REPO}/misc/${ENV_NAME}.yaml"  # Wherever your .yaml file is, recommended to be in your GitHub repository
-**log(){ echo "[$(date +'%F %T')] $*"; } 
+ENV_NAME="my_env_name"  # Name of your conda environment. See the {my_env_name}.tar.gz name   # *** 
+ENV_TARBALL_FILE="${ENV_NAME}.tar.gz"
+ENV_TARBALL_PATH="/mnt/project/conda_envs/${ENV_TARBALL_FILE}" # Compressed conda env location   # *** 
+LOCAL_ENV_PATH="$HOME/conda_envs/${ENV_NAME}" # Save the conda env here  # *** 
+ENV_YAML_PATH="${LOCAL_MY_FIRST_REPO}/misc/${ENV_NAME}.yaml"  # Wherever your .yaml file is, recommended to be in your GitHub repository  # *** 
+log(){ echo "[$(date +'%F %T')] $*"; } 
 
 # Ensure local ~/.ssh and DX folders exist
 init_ssh_dirs() {
@@ -322,18 +322,18 @@ main() {
   
   ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null
 
-  # 1a) Download the first GitHub repository (clone) 
-**  git_get_repo "$LOCAL_MY_FIRST_REPO" "$MY_FIRST_REPO_SSH"
-**  # 2a) Switch to the branch in the first repo (checkout)
-**  git_switch_branch  "$LOCAL_MY_FIRST_REPO" "$BRANCH"
-**  log "Ready on branch '$BRANCH' in:"
+  # 1a) Download the first GitHub repository (clone)          
+  git_get_repo "$LOCAL_MY_FIRST_REPO" "$MY_FIRST_REPO_SSH"   
+  # 2a) Switch to the branch in the first repo (checkout)     
+  git_switch_branch  "$LOCAL_MY_FIRST_REPO" "$BRANCH"         # *** Optional second repo
+  log "Ready on branch '$BRANCH' in:"
   log "  $LOCAL_MY_FIRST_REPO"
 
-  # 1b) Download the second GitHub repository (clone)
-**  git_get_repo "$LOCAL_MY_SECOND_REPO" "$MY_SECOND_REPO_SSH"
-**  # 2b) Switch to the branch in the second repo (checkout)
-**  git_switch_branch  "$LOCAL_MY_SECOND_REPO" "$BRANCH"
-**  log "Ready on branch '$BRANCH' in:"
+  # 1b) Download the second GitHub repository (clone)        
+  git_get_repo "$LOCAL_MY_SECOND_REPO" "$MY_SECOND_REPO_SSH"  
+  # 2b) Switch to the branch in the second repo (checkout)
+  git_switch_branch  "$LOCAL_MY_SECOND_REPO" "$BRANCH"       # *** Optional second repo
+  log "Ready on branch '$BRANCH' in:"
   log "  $LOCAL_MY_FIRST_REPO"
 
   git config --global user.name "$GITHUB_USERNAME"
