@@ -367,3 +367,8 @@ Data: When you create files you want to save, make sure you “dx upload” them
 
 Editing Code: You may prefer to edit your code in an IDE like VSCode rather than vim in the terminal. The GitHub setup here makes this very straightforward: edit your code in your preferred IDE, upload it to GitHub, then run the startup code here which will grab all the latest GitHub code. 
 
+
+### To Do
+- Provide phenotype loading into
+- Provide info on updating the conda env
+
