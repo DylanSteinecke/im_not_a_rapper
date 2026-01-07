@@ -44,3 +44,48 @@ for CHR in {1..22}; do
 			  --memory 60000 \ 
               --out ~/eur_sibs_snps_wgs_chr${CHR}
 done
+
+
+
+# RAP to extract all ancestry siblings from WGS, QC filter, filters bfiles
+UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants, PLINK format [500k release]"
+for CHR in {1..22}; do
+	plink2 \
+		--pfile "${UKB_PFILE_DIR}/ukb24308_c${CHR}_b0_v1" \
+		--keep "$HOME/sibreg/sibreg_project/processed/sibs_all_ancestries.txt" \
+		--threads 32 \
+		--memory 60000 \
+		--geno 0.10 \
+		--maf 0.01 \
+		--mac 30 \
+		--snps-only just-acgt
+		--set-missing-var-ids @:#:$r:$a
+		--rm-dup force-first
+		--max-alleles 2
+		--mind 0.05
+		--make-bed \
+		--out "$HOME/sibreg_project/sibreg/all_sibs_snps_wgs_qc_chr${CHR}"
+done
+
+
+# RAP to extract all ancestry siblings from WGS, QC filter, filters bfiles
+for CHR in {1..22}; do
+	plink2 \
+		--bfile /mnt/project/genotypes/all_sibs_wgs_maf1prct/all_sibs_snps_wgs_maf1prct_chr${CHR} \
+		--keep "$HOME/sibreg/sibreg_project/processed/sibs_all_ancestries.txt" \
+		--threads 15 \
+		--memory 60000 \
+		--snps-only just-acgt \
+		--max-alleles 2 \
+		--geno 0.10 \
+		--maf 0.01 \
+		--mac 30 \
+		--hwe 1e-20 \
+		--snps-only just-acgt
+		--max-alleles 2
+		--mind 0.05
+		--make-bed \
+		--out "$HOME/sibreg_project/sibreg/all_sibs_snps_wgs_qc_chr${CHR}"
+done
+
+
