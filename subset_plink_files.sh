@@ -52,19 +52,20 @@ UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants
 for CHR in {1..22}; do
 	plink2 \
 		--pfile "${UKB_PFILE_DIR}/ukb24308_c${CHR}_b0_v1" \
-		--keep "$HOME/sibreg/sibreg_project/processed/sibs_all_ancestries.txt" \
-		--threads 32 \
+		--keep "$HOME/sibreg/sibreg_project/processed/qc_filtered_all_ancestries_sib_ids.txt" \
+		--threads 40 \
 		--memory 60000 \
+		--no-pheno \
 		--geno 0.10 \
 		--maf 0.01 \
 		--mac 30 \
-		--snps-only just-acgt
-		--set-missing-var-ids @:#:$r:$a
-		--rm-dup force-first
-		--max-alleles 2
-		--mind 0.05
+		--snps-only just-acgt \
+	    --set-missing-var-ids '@:#:$r:$a' \
+		--rm-dup force-first \
+		--max-alleles 2 \
+		--mind 0.05 \
 		--make-bed \
-		--out "$HOME/sibreg_project/sibreg/all_sibs_snps_wgs_qc_chr${CHR}"
+		--out "$HOME/sibreg/sibreg_project/all_sibs_snps_wgs_qc_chr${CHR}"
 done
 
 
