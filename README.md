@@ -1,4 +1,4 @@
-# im_not_a_rapper
+# Tutorial and Helper Code for the UK Biobank RAP (DNAnexus Cloud Environment)
 Personal helper code for working with the UK Biobank RAP. This might save you a TON of time for setting up your project environment, reducing the fixed costs associated with working on the UK Biobank RAP. 
 
 # First Time Setup on the RAP
