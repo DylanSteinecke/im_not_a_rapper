@@ -69,24 +69,38 @@ for CHR in {1..22}; do
 done
 
 
-# RAP to extract all ancestry siblings from WGS, QC filter, filters bfiles
+# RAP to extract all ancestry siblings from WGS, QC filter
+UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants, PLINK format [500k release]"
 for CHR in {1..22}; do
 	plink2 \
-		--bfile /mnt/project/genotypes/all_sibs_wgs_maf1prct/all_sibs_snps_wgs_maf1prct_chr${CHR} \
+		--pfile "${UKB_PFILE_DIR}/ukb24308_c${CHR}_b0_v1" \
 		--keep "$HOME/sibreg/sibreg_project/processed/sibs_all_ancestries.txt" \
-		--threads 15 \
+		--threads 30 \
 		--memory 60000 \
-		--snps-only just-acgt \
-		--max-alleles 2 \
-		--geno 0.10 \
 		--maf 0.01 \
 		--mac 30 \
 		--hwe 1e-20 \
-		--snps-only just-acgt
-		--max-alleles 2
-		--mind 0.05
+		--snps-only just-acgt \
+		--max-alleles 2 \
+		--set-all-var-ids '@:#:$r:$a' \
+		--geno 0.05 \
+		--no-pheno \
 		--make-bed \
-		--out "$HOME/sibreg_project/sibreg/all_sibs_snps_wgs_qc_chr${CHR}"
+		--out "$HOME/sibreg/sibreg_project/processed/all_sibs_snps_wgs_qc_chr${CHR}"
 done
 
 
+# Alex, RAP to extract WB ancestry siblings from WGS, QC filter, filters bfiles
+for CHR in {1..22}; do
+	plink2 \
+		--pfile "/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants, PLINK format [500k release]/ukb24308_c${CHR}_b0_v1" \
+		--keep "$HOME/white_brit_qc_filtered_mir_sib_iids.txt" \
+		--threads 15 \
+		--memory 60000 \
+		--no-pheno \
+		--geno 0.05 \
+		--maf 0.01 \
+		--make-bed \
+		--out "$HOME/white_brit_qc_filtered_mir_sib_iid_chr${CHR}"
+	dx upload "$HOME/white_brit_qc_filtered_mir_sib_iid_chr${CHR}"
+done
