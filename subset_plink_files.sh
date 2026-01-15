@@ -74,7 +74,7 @@ UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants
 for CHR in {1..22}; do
 	plink2 \
 		--pfile "${UKB_PFILE_DIR}/ukb24308_c${CHR}_b0_v1" \
-		--keep "$HOME/sibreg/sibreg_project/processed/sibs_all_ancestries.txt" \
+		--keep "$HOME/sibreg/sibreg_project/processed/qc_filtered_all_ancestries_sib_ids.txt.txt" \
 		--threads 30 \
 		--memory 60000 \
 		--maf 0.01 \
@@ -86,8 +86,21 @@ for CHR in {1..22}; do
 		--geno 0.05 \
 		--no-pheno \
 		--make-bed \
-		--out "$HOME/sibreg/sibreg_project/processed/all_sibs_snps_wgs_qc_chr${CHR}"
+		--out "$HOME/sibreg/sibreg_project/processed/all_sibs_snps_wgs_qc_snp_and_sample_chr${CHR}"
 done
+
+# oops, forgot to filter by samples
+for CHR in {1..22}; do
+	plink2 \
+		--bfile "/mnt/project/genotypes/all_sibs_wgs_maf1prct_qc/all_sibs_snps_wgs_qc_chr${CHR}" \
+		--keep "$HOME/sibreg/sibreg_project/processed/qc_filtered_all_ancestries_sib_ids.txt" \
+		--threads 30 \
+		--memory 60000 \
+		--make-bed \
+		--out "$HOME/sibreg/sibreg_project/processed/all_sibs_snps_wgs_qc_snp_and_sample_chr${CHR}"
+	dx upload "$HOME/sibreg/sibreg_project/processed/all_sibs_snps_wgs_qc_snp_and_sample_chr${CHR}"*
+done
+
 
 
 # Alex, RAP to extract WB ancestry siblings from WGS, QC filter, filters bfiles
