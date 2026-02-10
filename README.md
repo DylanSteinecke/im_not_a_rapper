@@ -1,6 +1,9 @@
 # Tutorial and Helper Code for the UK Biobank RAP (DNAnexus Cloud Environment)
 Personal helper code for working with the UK Biobank RAP. This might save you a TON of time for setting up your project environment, reducing the fixed costs associated with working on the UK Biobank RAP. 
 
+<img width="400" height="225" alt="image" src="https://github.com/user-attachments/assets/1524cfce-6434-4871-8da7-e79d0392a4b9" />
+
+
 # First Time Setup on the RAP
 ## Launching an Instance in a Project
 - Log in here DNAnexus - Log In
