@@ -19,6 +19,21 @@ for CHR in {5..20}; do
 done
 exit
 
+UKB_BGEN_DIR="/mnt/project/Bulk/Imputation/UKB imputation from genotype"
+for CHR in {1..20}; do
+       plink2 --bgen "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3.bgen" ref-first \
+              --sample "${UKB_BGEN_DIR}/ukb22828_c${CHR}_b0_v3.sample" \
+              --make-bed \
+              --extract /home/dnanexus/sibreg/sibreg_project/processed/ldsc_snps_rsids_nodup.snplist \
+              --keep /home/dnanexus/sibreg/sibreg_project/processed/sibs_all_ancestries.txt \
+              --threads 7 \
+              --out ~/all_sibs_snps_with_ldscores_orig_imputed_chr${CHR} \
+	      --memory 50000
+
+       dx  upload ~/all_sibs_snps_with_ldscores_orig_imputed_nodup_chr${CHR}*
+done
+exit
+
 # RAP to extract most EUR siblings from WGS, convert to bfiles
 UKB_PFILE_DIR="/mnt/project/Bulk/DRAGEN WGS/DRAGEN population level WGS variants, PLINK format [500k release]"
 for CHR in {1..22}; do
